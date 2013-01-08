@@ -17,7 +17,9 @@
 <script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
 <script src="../jquery.transform.min.js"></script>
 <script>
-$('#container').animate({'translateX': 200}).animate({'translateY': 200}).animate({'scaleX': 2}).animate({'scaleY': 2}).animate({'skewX': 20}).animate({'skewY': 20}).animate({'rotate': 50});
+if ($.support.cssTransform) {
+    $('#container').animate({'translateX': 200}).animate({'translateY': 200}).animate({'scaleX': 2}).animate({'scaleY': 2}).animate({'skewX': 20}).animate({'skewY': 20}).animate({'rotate': 60});
+}
 </script>
 </body>
 </html>
