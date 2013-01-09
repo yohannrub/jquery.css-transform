@@ -3,6 +3,8 @@
 jQuery Transform is a lightweight jQuery plugin that adds transform manipulation and animation support.  
 It only handles 2D transforms.
 
+[**Demo page**](http://yohannrub.github.com/jquery.transform/)
+
 
 ## Usage
 
@@ -17,10 +19,12 @@ $('#element').animate({'scaleY': 2});
 $('#element').animate({'skewX': 20});
 $('#element').animate({'skewY': 20});
 $('#element').animate({'rotate': 50});
+
+$('#element').css({'translateX': 200});
 ```
 
 
 ## Extra
 
-`$.support.cssTransform` is assigned the supported (vendor-prefixed or not) css transform property (e.g. `WebkitTransform`), *false* if css transforms are not supported.  
-`$.support.cssTransition` is assigned the supported (vendor-prefixed or not) css transition property (e.g. `WebkitTransition`), *false* if css transitions are not supported.
+`$.support.cssTransform` is assigned the supported (vendor-prefixed or not) CSS transform property (e.g. `WebkitTransform`), *false* if CSS transforms are not supported.  
+`$.support.cssTransition` is assigned the supported (vendor-prefixed or not) CSS transition property (e.g. `WebkitTransition`), *false* if CSS transitions are not supported.
