@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    #container {
+      width: 100px;
+      height: 100px;
+      background-color: #ff0000;
+    }
+    </style>
+</head>
+
+<body>
+
+<div>
+    <input id="translateX" type="button" value="translateX" />
+    <input id="translateY" type="button" value="translateY" />
+    <input id="scaleX" type="button" value="scaleX" />
+    <input id="scaleY" type="button" value="scaleY" />
+    <input id="skewX" type="button" value="skewX" />
+    <input id="skewY" type="button" value="skewY" />
+    <input id="rotate" type="button" value="rotate" />
+</div>
+
+<div id="container"></div>
+
+<script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+<script src="../jquery.transform.min.js"></script>
+<script>
+// Returns a random number between min and max
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+if ($.support.cssTransform) {
+    var $container = $('#container');
+    $('#translateX').click(function() {
+        $container.animate({'translateX': getRandomArbitrary(100, 400)});
+    });
+    $('#translateY').click(function() {
+        $container.animate({'translateY': getRandomArbitrary(100, 400)});
+    });
+    $('#scaleX').click(function() {
+        $container.animate({'scaleX': getRandomArbitrary(-4, 4)});
+    });
+    $('#scaleY').click(function() {
+        $container.animate({'scaleY': getRandomArbitrary(-4, 4)});
+    });
+    $('#skewX').click(function() {
+        $container.animate({'skewX': getRandomArbitrary(10, 60)});
+    });
+    $('#skewY').click(function() {
+        $container.animate({'skewY': getRandomArbitrary(10, 60)});
+    });
+    $('#rotate').click(function() {
+        $container.animate({'rotate': getRandomArbitrary(10, 100)});
+    });
+}
+</script>
+</body>
+</html>
