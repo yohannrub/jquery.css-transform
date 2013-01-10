@@ -1,6 +1,6 @@
 /*!
- * jQuery Transform v@1.0.1
- * https://github.com/yohannrub/jquery.transform
+ * jQuery CSS Transform v@1.0.1
+ * https://github.com/yohannrub/jquery.css-transform
  * Licensed under the MIT license
  */
 
