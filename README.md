@@ -1,6 +1,6 @@
 # jQuery CSS Transform
 
-jQuery CSS Transform is a lightweight jQuery plugin that adds transform manipulation and animation support.  
+jQuery CSS Transform is a lightweight jQuery plugin that adds transform manipulation and animation support for browsers supporting CSS transforms.  
 It only handles 2D transforms.
 
 [**Demo page**](http://yohannrub.github.com/jquery.css-transform/)
