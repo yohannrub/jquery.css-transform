@@ -35,26 +35,35 @@ function getRandomArbitrary(min, max) {
 if ($.support.cssTransform) {
     var $container = $('#container');
     $('#translateX').click(function() {
-        $container.animate({'translateX': getRandomArbitrary(100, 400)});
+        $container.stop().animate({'translateX': getRandomArbitrary(100, 400)});
     });
     $('#translateY').click(function() {
-        $container.animate({'translateY': getRandomArbitrary(100, 400)});
+        $container.stop().animate({'translateY': getRandomArbitrary(100, 400)});
     });
     $('#scaleX').click(function() {
-        $container.animate({'scaleX': getRandomArbitrary(-4, 4)});
+        $container.stop().animate({'scaleX': getRandomArbitrary(-4, 4)});
     });
     $('#scaleY').click(function() {
-        $container.animate({'scaleY': getRandomArbitrary(-4, 4)});
+        $container.stop().animate({'scaleY': getRandomArbitrary(-4, 4)});
     });
     $('#skewX').click(function() {
-        $container.animate({'skewX': getRandomArbitrary(10, 60)});
+        $container.stop().animate({'skewX': getRandomArbitrary(-80, 80)});
     });
     $('#skewY').click(function() {
-        $container.animate({'skewY': getRandomArbitrary(10, 60)});
+        $container.stop().animate({'skewY': getRandomArbitrary(-80, 80)});
     });
     $('#rotate').click(function() {
-        $container.animate({'rotate': getRandomArbitrary(10, 100)});
+        $container.stop().animate({'rotate': getRandomArbitrary(-180, 180)});
     });
+} else {
+    $('<p></p>', {
+        text: 'Your current browser does not natively supports CSS transforms, so the plugin is not run.',
+        css: {
+            'background-color': '#ffffe0',
+            'border': '2px solid red',
+            'font-weight': 'bold'
+        }
+    }).prependTo($('body'));
 }
 </script>
 </body>
