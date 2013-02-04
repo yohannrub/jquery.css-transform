@@ -1,140 +1,130 @@
 /*!
- * jQuery CSS Transform v@1.0.1
+ * jQuery CSS Transform v@1.1
  * https://github.com/yohannrub/jquery.css-transform
  * Licensed under the MIT license
  */
 
 ;(function($) {
 
-    var UNITS = {
-        length: 'px',
-        angle: 'deg'
-    };
-
-    var RAD_TO_DEG = 180 / Math.PI,
-        DEG_TO_RAD = Math.PI / 180;
-
     function getStyleProperty(element, properties) {
         var p;
         while (p = properties.shift()) {
-            if (typeof element.style[p] != 'undefined') {
+            if (p in element.style) {
                 return p;
             }
         }
         return false;
     }
 
-    $.support.cssTransform = getStyleProperty(document.createElement('div'), ['transform', 'msTransform', 'WebkitTransform', 'MozTransform', 'OTransform']);
-    $.support.cssTransition = getStyleProperty(document.createElement('div'), ['transition', 'msTransition', 'WebkitTransition', 'MozTransition', 'OTransition']);
+    var divElement = document.createElement('div');
+    var cssTransformProperty = $.support.cssTransform = getStyleProperty(divElement, ['transform', 'msTransform', 'WebkitTransform', 'MozTransform', 'OTransform']);
+    $.support.cssTransition = getStyleProperty(divElement, ['transition', 'msTransition', 'WebkitTransition', 'MozTransition', 'OTransition']);
 
-    if ($.support.cssTransform) {
+    if (cssTransformProperty) {
 
-        var rmatrix = /matrix\(\s*([\d.-]+)\s*,\s*([\d.-]+)\s*,\s*([\d.-]+)\s*,\s*([\d.-]+)\s*,\s*([\d.-]+)\s*,\s*([\d.-]+)\)/;
-
-        $.cssHooks['translateX'] = {
-            get: function(elem, computed, extra) {
-                var transform = $.css(elem, $.support.cssTransform),
-                    m = transform.match(rmatrix);
-                return m ? parseFloat(m[5]) : 0;
-            },
-            set: function(elem, value) {
-                var transform = $.css(elem, $.support.cssTransform);
-                elem.style[$.support.cssTransform] = transform.match(rmatrix) ? transform.replace(rmatrix, function(m, $1, $2, $3, $4, $5, $6) { return 'matrix(' + [$1, $2, $3, $4, parseFloat(value), $6].join(',') + ')'; }) : 'translateX(' + parseFloat(value) + UNITS.length + ')';
-            }
-        };
-        $.cssHooks['translateY'] = {
-            get: function(elem, computed, extra) {
-                var transform = $.css(elem, $.support.cssTransform),
-                    m = transform.match(rmatrix);
-                return m ? parseFloat(m[6]) : 0;
-            },
-            set: function(elem, value) {
-                var transform = $.css(elem, $.support.cssTransform);
-                elem.style[$.support.cssTransform] = transform.match(rmatrix) ? transform.replace(rmatrix, function(m, $1, $2, $3, $4, $5, $6) { return 'matrix(' + [$1, $2, $3, $4, $5, parseFloat(value)].join(',') + ')'; }) : 'translateY(' + parseFloat(value) + UNITS.length + ')';
-            }
+        var DEFAULT_TRANSFORM_VALUES = {
+            'translateX': 0,
+            'translateY': 0,
+            'translateZ': 0,
+            'scaleX': 1,
+            'scaleY': 1,
+            'scaleZ': 1,
+            'skewX': 0,
+            'skewY': 0,
+            'rotate': 0,
+            'rotateX': 0,
+            'rotateY': 0,
+            'rotateZ': 0,
+            'perspective': 0
         };
 
-        $.cssHooks['scaleX'] = {
-            get: function(elem, computed, extra) {
-                var transform = $.css(elem, $.support.cssTransform),
-                    m = transform.match(rmatrix);
-                return m ? parseFloat(m[1]) : 1;
-            },
-            set: function(elem, value) {
-                var transform = $.css(elem, $.support.cssTransform);
-                elem.style[$.support.cssTransform] = transform.match(rmatrix) ? transform.replace(rmatrix, function(m, $1, $2, $3, $4, $5, $6) { return 'matrix(' + [parseFloat(value), $2, $3, $4, $5, $6].join(',') + ')'; }) : 'scaleX(' + parseFloat(value) + ')';
-            }
-        };
-        $.cssHooks['scaleY'] = {
-            get: function(elem, computed, extra) {
-                var transform = $.css(elem, $.support.cssTransform),
-                    m = transform.match(rmatrix);
-                return m ? parseFloat(m[4]) : 1;
-            },
-            set: function(elem, value) {
-                var transform = $.css(elem, $.support.cssTransform);
-                elem.style[$.support.cssTransform] = transform.match(rmatrix) ? transform.replace(rmatrix, function(m, $1, $2, $3, $4, $5, $6) { return 'matrix(' + [$1, $2, $3, parseFloat(value), $5, $6].join(',') + ')'; }) : 'scaleY(' + parseFloat(value) + ')';
-            }
-        };
+        var TRANSFORM_SEPARATOR = ' ';
 
-        $.cssHooks['skewX'] = {
-            get: function(elem, computed, extra) {
-                var transform = $.css(elem, $.support.cssTransform),
-                    m = transform.match(rmatrix);
-                return m ? Math.atan(parseFloat(m[3])) * RAD_TO_DEG : 0;
-            },
-            set: function(elem, value) {
-                var transform = $.css(elem, $.support.cssTransform);
-                elem.style[$.support.cssTransform] = transform.match(rmatrix) ? transform.replace(rmatrix, function(m, $1, $2, $3, $4, $5, $6) { return 'matrix(' + [$1, $2, Math.tan(parseFloat(value) * DEG_TO_RAD), $4, $5, $6].join(',') + ')'; }) : 'skewX(' + parseFloat(value) + UNITS.angle + ')';
-            }
-        };
-        $.cssHooks['skewY'] = {
-            get: function(elem, computed, extra) {
-                var transform = $.css(elem, $.support.cssTransform),
-                    m = transform.match(rmatrix);
-                return m ? Math.atan(parseFloat(m[2])) * RAD_TO_DEG : 0;
-            },
-            set: function(elem, value) {
-                var transform = $.css(elem, $.support.cssTransform);
-                elem.style[$.support.cssTransform] = transform.match(rmatrix) ? transform.replace(rmatrix, function(m, $1, $2, $3, $4, $5, $6) { return 'matrix(' + [$1, Math.tan(parseFloat(value) * DEG_TO_RAD), $3, $4, $5, $6].join(',') + ')'; }) : 'skewY(' + parseFloat(value) + UNITS.angle + ')';
-            }
-        };
+        var namespace = 'cssTransform';
 
-        $.cssHooks['rotate'] = {
-            get: function(elem, computed, extra) {
-                var transform = $.css(elem, $.support.cssTransform),
-                    m = transform.match(rmatrix);
-                return m ? Math.atan2(parseFloat(m[2]),parseFloat(m[1])) * RAD_TO_DEG : 0;
+        function getTransformData(elem, transformKey) {
+            var $elem = $(elem),
+                data = $elem.data(namespace);
+
+            return (data && data[transformKey]) ? data[transformKey] : DEFAULT_TRANSFORM_VALUES[transformKey];
+        }
+
+        function updateTransformData(elem, transform) {
+            var $elem = $(elem),
+                data = $elem.data(namespace);
+
+            $elem.data(namespace, $.extend(data, DEFAULT_TRANSFORM_VALUES, transform));
+        }
+
+        var methods = {
+            init: function(options) {
             },
-            set: function(elem, value) {
-                var transform = $.css(elem, $.support.cssTransform);
-                var valueRad = parseFloat(value) * DEG_TO_RAD;
-                elem.style[$.support.cssTransform] = transform.match(rmatrix) ? transform.replace(rmatrix, function(m, $1, $2, $3, $4, $5, $6) { return 'matrix(' + [Math.cos(valueRad), Math.sin(valueRad), -Math.sin(valueRad), Math.cos(valueRad), $5, $6].join(',') + ')'; }) : 'rotate(' + parseFloat(value) + UNITS.angle + ')';
+
+            save: function() {
+                return this.each(function() {
+                    var transform = {};
+                    transform[cssTransformProperty] = this.style[cssTransformProperty];
+                    updateTransformData(this, transform);
+                });
+            },
+
+            restore: function() {
+                return this.each(function() {
+                    var transform = {},
+                        cssTransformValue = this.style[cssTransformProperty];
+                    if (cssTransformValue) {
+                        var cssTransformValueArray = cssTransformValue.split(TRANSFORM_SEPARATOR);
+                        cssTransformValueArray.pop();
+                        cssTransformValue = cssTransformValueArray.join(TRANSFORM_SEPARATOR);
+                    }
+                    transform[cssTransformProperty] = this.style[cssTransformProperty] = cssTransformValue;
+                    updateTransformData(this, transform);
+                });
+            },
+
+            reset: function() {
+                return this.each(function() {
+                    var transform = {};
+                    transform[cssTransformProperty] = this.style[cssTransformProperty] = '';
+                    updateTransformData(this, transform);
+                });
             }
         };
 
-        $.fx.step['translateX'] = function(fx) {
-            $.cssHooks['translateX'].set(fx.elem, fx.now);
-        };
-        $.fx.step['translateY'] = function(fx) {
-            $.cssHooks['translateY'].set(fx.elem, fx.now);
-        };
-        $.fx.step['scaleX'] = function(fx) {
-            $.cssHooks['scaleX'].set(fx.elem, fx.now);
-        };
-        $.fx.step['scaleY'] = function(fx) {
-            $.cssHooks['scaleY'].set(fx.elem, fx.now);
-        };
-        $.fx.step['skewX'] = function(fx) {
-            $.cssHooks['skewX'].set(fx.elem, fx.now);
-        };
-        $.fx.step['skewY'] = function(fx) {
-            $.cssHooks['skewY'].set(fx.elem, fx.now);
-        };
-        $.fx.step['rotate'] = function(fx) {
-            $.cssHooks['rotate'].set(fx.elem, fx.now);
+        $.fn[namespace] = function(method) {
+            if (methods[method]) {
+                return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+            } else if (typeof method === 'object' || !method) {
+                return methods.init.apply(this, arguments);
+            } else {
+                $.error('Method ' + method + ' does not exist on jQuery.' + namespace);
+            }
         };
 
+        $(function() {
+            $.each(DEFAULT_TRANSFORM_VALUES, function(cssTransformHook, cssTransformDefaultValue) {
+
+                $.cssNumber[cssTransformHook] = /^scale/.test(cssTransformHook);
+
+                $.cssHooks[cssTransformHook] = {
+                    get: function(elem, computed, extra) {
+                        return getTransformData(elem, cssTransformHook);
+                    },
+                    set: function(elem, value) {
+                        var transform = {},
+                            cssTransformValue = getTransformData(elem, cssTransformProperty);
+                        transform[cssTransformHook] = value;
+                        updateTransformData(elem, transform);
+
+                        elem.style[cssTransformProperty] = (cssTransformValue ? cssTransformValue + TRANSFORM_SEPARATOR : '') + cssTransformHook + '(' + value + ')';
+                    }
+                };
+
+                $.fx.step[cssTransformHook] = function(fx) {
+                    $.cssHooks[cssTransformHook].set(fx.elem, $.cssNumber[cssTransformHook] ? fx.now : fx.now + fx.unit);
+                };
+            });
+        });
     }
 
 })(jQuery);
