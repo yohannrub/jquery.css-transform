@@ -1,5 +1,5 @@
 /*!
- * jQuery CSS Transform v@1.1
+ * jQuery CSS Transform v@1.2
  * https://github.com/yohannrub/jquery.css-transform
  * Licensed under the MIT license
  */
@@ -104,7 +104,7 @@
         $(function() {
             $.each(DEFAULT_TRANSFORM_VALUES, function(cssTransformHook, cssTransformDefaultValue) {
 
-                $.cssNumber[cssTransformHook] = /^scale/.test(cssTransformHook);
+                $.cssNumber[cssTransformHook] = (cssTransformHook.indexOf('scale') == 0);
 
                 $.cssHooks[cssTransformHook] = {
                     get: function(elem, computed, extra) {
