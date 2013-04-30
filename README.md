@@ -36,7 +36,7 @@ $('#element').cssTransform('restore');
 // Will reset the transformation state (delete all transformations)
 $('#element').cssTransform('reset');
 
-// To use 3D transformations, first set a perspective value, then save the transformation state, then apply the 3D transform function
+// To add a perspective and see its effect, first set a perspective value, then save the transformation state, then apply the 3D transform function
 $('#element').css({'perspective': '400px'})
     .cssTransform('save')
     .css({'rotateX': '60deg'});

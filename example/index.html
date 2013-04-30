@@ -5,9 +5,17 @@
     #container {
       width: 100px;
       height: 100px;
-      background-color: #ff0000;
       position: relative;
       z-index: -1;
+      -webkit-perspective: 300px;
+      -moz-perspective: 300px;
+      -o-perspective: 300px;
+      perspective: 300px;
+    }
+    #box {
+      width: 100px;
+      height: 100px;
+      background-color: #ff0000;
     }
     </style>
 </head>
@@ -29,15 +37,21 @@
     <input type="button" id="rotateX" value="rotateX" />
     <input type="button" id="rotateY" value="rotateY" />
     <input type="button" id="rotateZ" value="rotateZ" />
-    <input type="button" id="perspective" value="perspective" /> (Set perspective, then save, then apply a 3D transform)
+    <input type="button" id="perspective" value="perspective" />
 </div>
 <div>Composition:
     <input type="button" id="save" value="save" />
     <input type="button" id="restore" value="restore" />
     <input type="button" id="reset" value="reset" />
 </div>
+<div>
+  In this example, a default perspective has been preset on a static container.<br />
+  To manually add perspective and see its effect, press "perspective", then save, then apply a 3D transform.
+</div>
 
-<div id="container"></div>
+<div id="container">
+    <div id="box"></div>
+</div>
 
 <script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
 <script src="../jquery.css-transform.min.js"></script>
@@ -48,56 +62,56 @@ function getRandomNumber(min, max) {
 }
 
 if ($.support.cssTransform) {
-    var $container = $('#container');
+    var $box = $('#box');
 
     $('#translateX').click(function() {
-        $container.stop().animate({'translateX': getRandomNumber(0, 500) + 'px'});
+        $box.stop().animate({'translateX': getRandomNumber(0, 500) + 'px'});
     });
     $('#translateY').click(function() {
-        $container.stop().animate({'translateY': getRandomNumber(0, 500) + 'px'});
+        $box.stop().animate({'translateY': getRandomNumber(0, 500) + 'px'});
     });
     $('#translateZ').click(function() {
-        $container.stop().animate({'translateZ': getRandomNumber(-200, 100) + 'px'});
+        $box.stop().animate({'translateZ': getRandomNumber(-200, 100) + 'px'});
     });
     $('#scaleX').click(function() {
-        $container.stop().animate({'scaleX': getRandomNumber(-4, 4)});
+        $box.stop().animate({'scaleX': getRandomNumber(-4, 4)});
     });
     $('#scaleY').click(function() {
-        $container.stop().animate({'scaleY': getRandomNumber(-4, 4)});
+        $box.stop().animate({'scaleY': getRandomNumber(-4, 4)});
     });
     $('#scaleZ').click(function() {
-        $container.stop().animate({'scaleZ': getRandomNumber(-4, 4)});
+        $box.stop().animate({'scaleZ': getRandomNumber(-4, 4)});
     });
     $('#skewX').click(function() {
-        $container.stop().animate({'skewX': getRandomNumber(-80, 80) + 'deg'});
+        $box.stop().animate({'skewX': getRandomNumber(-80, 80) + 'deg'});
     });
     $('#skewY').click(function() {
-        $container.stop().animate({'skewY': getRandomNumber(-80, 80) + 'deg'});
+        $box.stop().animate({'skewY': getRandomNumber(-80, 80) + 'deg'});
     });
     $('#rotate').click(function() {
-        $container.stop().animate({'rotate': getRandomNumber(-200, 200) + 'deg'});
+        $box.stop().animate({'rotate': getRandomNumber(-200, 200) + 'deg'});
     });
     $('#rotateX').click(function() {
-        $container.stop().animate({'rotateX': getRandomNumber(-200, 200) + 'deg'});
+        $box.stop().animate({'rotateX': getRandomNumber(-200, 200) + 'deg'});
     });
     $('#rotateY').click(function() {
-        $container.stop().animate({'rotateY': getRandomNumber(-200, 200) + 'deg'});
+        $box.stop().animate({'rotateY': getRandomNumber(-200, 200) + 'deg'});
     });
     $('#rotateZ').click(function() {
-        $container.stop().animate({'rotateZ': getRandomNumber(-200, 200) + 'deg'});
+        $box.stop().animate({'rotateZ': getRandomNumber(-200, 200) + 'deg'});
     });
     $('#perspective').click(function() {
-        $container.stop().css({'perspective': getRandomNumber(100, 500) + 'px'});
+        $box.stop().css({'perspective': getRandomNumber(100, 500) + 'px'});
     });
 
     $('#save').click(function() {
-        $container.stop().cssTransform('save');
+        $box.stop().cssTransform('save');
     });
     $('#restore').click(function() {
-        $container.stop().cssTransform('restore');
+        $box.stop().cssTransform('restore');
     });
     $('#reset').click(function() {
-        $container.stop().cssTransform('reset');
+        $box.stop().cssTransform('reset');
     });
 } else {
     $('<p></p>', {
